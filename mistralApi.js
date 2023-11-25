@@ -48,17 +48,35 @@ class MistralApi extends ApiEndpoint {
      */
     async queryMistralModel(data) {
         const fetch = await this.fetchWrapper();
-
-        const response = await fetch(
-            "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-v0.1",
-            {
-                headers: { Authorization: `Bearer ${this.apiToken}` },
-                method: "POST",
-                body: JSON.stringify(data),
+    
+        try {
+            const response = await fetch(
+                "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-v0.1",
+                {
+                    headers: {
+                        Authorization: `Bearer ${this.apiToken}`,
+                        'Content-Type': 'application/json'  // Add this line
+                    },
+                    method: "POST",
+                    body: JSON.stringify(data),
+                }
+            );
+    
+            if (!response.ok) {
+                console.error("API response error:", response.status, response.statusText);
+                const text = await response.text();
+                console.error("API response body:", text);
+                throw new Error(`API call failed with status ${response.status}`);
             }
-        );
-        return await response.json();
+    
+            return await response.json();
+        } catch (error) {
+            console.error("Error querying Mistral model:", error);
+            throw error;
+        }
     }
+    
+    
 }
 
 module.exports = MistralApi;
