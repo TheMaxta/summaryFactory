@@ -48,7 +48,7 @@ import('node-fetch').then((module) => {
 
             const captions = await youtubeService.fetchCaptions(videoId, captionType);
             const processedCaptions = processText(captions);
-            const truncatedCaptions = truncateContent(processedCaptions, 1000);
+            const truncatedCaptions = truncateContent(processedCaptions, 1500);
 
             const apiNames = [
                 'openai',

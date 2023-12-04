@@ -38,7 +38,8 @@ class OpenAiApi extends ApiEndpoint {
     async chatCompletion(inputString) {
         const chatResponse = await this.openai.chat.completions.create({
             messages: [{ role: 'user', content: inputString }],
-            model: 'gpt-4-1106-preview', // Adjust the model as per requirement
+            // model: 'gpt-4-1106-preview', // Adjust the model as per requirement
+            model: 'gpt-3.5-turbo-16k',
         });
         return chatResponse.choices[0].message.content;
     }
