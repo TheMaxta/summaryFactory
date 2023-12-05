@@ -1,0 +1,198 @@
+video_id,transcript,gpt3.5,gpt3.5_word_count,gpt3.5_length,bart,bart_word_count,bart_length,pegasus,pegasus_word_count,pegasus_length,falcon,falcon_word_count,falcon_length
+bpG3gqDM80w,"Thanks to Brilliant for helping support this episode.
+Hmm, tensors.
+Holo Clone!
+What do mathematicians say about tensors?
+A rank-n tensor in m-dimensions is a mathematical object that has n indices
+and m-to-the-n components that obeys certain transformation rules.
+Pfff! We can do better than that!
+This episode was made possible by generous supporters on Patreon.
+Hey Crazies.
+If you’re like me, you find definitions in textbooks incredibly unsatisfying.
+In their defense, definitions like this one are correct, complete, and concise.
+We call them the three c’s.
+(Off Camera) No one calls them that!
+I call them that!
+Anyway, correctness is absolutely vital.
+It doesn’t matter how clear your explanation is if it’s wrong,
+but the other two are very flexible, so let’s see what we can do.
+By the end of the video, you should understand this definition with all its math speak.
+To get there though, we’re going to need a little context because that [BEEP] is abstract as [BEEP].
+The word ""tensor"" actually comes from an old Latin word meaning ""to stretch.""
+If you pull an object outward along its length, it experiences something called ""tensile stress.""
+In response, it’s length increases.
+Which, you know, makes sense.
+Except, that’s not the only type of stress an object can experience.
+This cube could be stretched or compressed along any of the 3 spatial directions.
+Wouldn’t a vector be enough for that?
+First, a vector is a tensor and, second,
+there are 6 other stresses I haven’t mentioned yet.
+The cube could also be sheared along those directions.
+That’s 9 possible stresses.
+Yeah, but can’t we just add the forces together along each direction?
+No. No we can’t.
+Each of these forces makes the cube respond in a different way.
+We have to consider them all separately.
+These 9 different stresses are usually organized into a 3-by-3 matrix called the stress tensor.
+Quick Disclaimer: It’s not a tensor because I can write it as a matrix.
+Matrices and tensors are not the same thing.
+A matrix is just a convenient way to organize numbers
+sometimes.
+Writing the stress tensor like this, we can see it clearly has 9 components,
+but our definition mentioned two specific properties:
+Rank and Dimension.
+This cube is 3-dimensional, so any tensor describing it’s behavior will also be dimension-3.
+That’s why our stress tensor is organized into 3 rows and 3 columns.
+Each corresponds to a specific direction in 3-dimensional space.
+Seriously. It’s that easy.
+Rank is the amount of information you need to find a specific component.
+In this case, we only need a row and a column.
+That’s 2 pieces of information, so we say the tensor is rank-2.
+The stress tensor is rank-2 and dimension-3.
+Matrix notation is really convenient for rank-2 tensors of any dimension.
+With the electromagnetic field tensor, you still only need a row and column to find a component,
+so it’s rank-2.
+However, there 4 rows and 4 columns, which means this tensor is 4-dimensional.
+The electromagnetic field tensor is rank-2 and dimension-4.
+This notation starts to fall apart with higher rank tensors though.
+For example, a rank-3 tensor requires 3 pieces of information to find a component.
+While this is still technically a matrix, the math operations aren’t very obvious.
+It gets even worse with rank-4 tensors.
+This is interesting looking, but it's not very useful.
+Honestly, the matrix notation is kind of like a security blanket anyway.
+It’s only there to make people feel more comfortable when they’re first learning about tensors.
+Then what are we supposed to use?
+Index notation!
+Rank-zero means you don’t need any information to find a component.
+That’s just a scalar.
+Boring!
+Rank-1 means we only need one piece of information to find a component.
+In other words, we only need one index.
+That’s just a vector.
+Maybe something like the velocity of a ball across a table.
+Rank-2 means we need two pieces of information or 2 indices.
+Traditionally, we use Latin letters for 2 and 3 dimensions and Greek letters for 4 dimensions,
+which helps make rank and dimension more obvious at a glance.
+Rank-3 means 3 indices, rank-4 means 4 indices, and so on.
+Ok fine, but what makes them tensors?
+How they transform!
+Humans have a decent intuition about velocity, so let’s start there.
+This ball could encounter some wind, which would slow it down,
+but that’s not the kind of transformation we’re talking about.
+We’re not talking about how the situation might change.
+We’re talking about how our coordinate system might change.
+To use physics on this scenario, we need to assign a coordinate system to it.
+Something like this.
+That’s just a tool though.
+We could just as easily have put the coordinates over here,
+or over here,
+or even over here.
+We could have rotated them like this,
+or like this.
+We could have even stretched or compressed either of the axes.
+But our choice of coordinates should have no effect on physical reality.
+None of these transformations will change the velocity of the ball.
+Wait, wouldn’t a rotation change the direction?
+No, it’s still moving to the right.
+But don’t the components change?
+Yes, but that’s just how we’re representing it, not what it actually is.
+This vector is a rank-1 dimension-2 tensor.
+It has two components, one for each of the dimensions.
+Any change in coordinates will change the values of those components.
+But the physical nature of that vector remains the same.
+Wouldn’t any arrow do that?
+Actually, no.
+Take angular momentum for example.
+If we put our coordinates at the center of this circular orbit,
+the angular momentum points up.
+It’s steady and constant.
+But, if we shift the coordinates to the edge of the circle, that’s no longer the case.
+The angular momentum changes over time.
+It even goes to zero for a brief moment,
+which is ridiculous!
+That shouldn’t happen with a real physical thing,
+so we call angular momentum a false vector or pseudovector.
+It has a direction, so it masquerades as a vector, but it isn’t actually a vector.
+Velocity is a real vector.
+Angular momentum is not.
+It’s a pseudovector.
+If a real vector is zero in one set of coordinates, it must be zero in all of them.
+No exceptions.
+But doesn’t velocity go to zero if your coordinates move along with the moving thing?
+Yes, but that’s not a 3-dimensional transformation.
+It’s a 4-dimensional one.
+Which means you can’t use 3-dimensional vectors.
+This ball is moving relative to the table, but not relative to itself.
+Shifting to a steadily moving coordinate system is something we call a boost
+and it requires we include time as an additional axis.
+This ball may be moving through space, but it’s also moving through time.
+It has its own time axis.
+We call this spacetime and a boost is a just a 4-dimenional coordinate rotation.
+But, if we want to talk about velocity, we need a 4-dimensional velocity or 4-velocity,
+which is a rank-1 dimension-4 tensor.
+Don’t forget. This video is still about tensors.
+This ball’s 4-velocity is a real vector.
+It remains the same under these 4D rotations.
+Just like regular 3-velocity did under 3D rotations.
+You can’t work in 4-dimensions without using 4-dimensional tensors.
+Come on crazies!
+The same goes for things like the 3-dimensional magnetic field.
+Moving electric charge will generate a magnetic field, but only if you see the charge moving.
+If you’re moving along with it, the charge is stationary, which means no magnetic field.
+The magnetic field is not a real vector.
+It’s a pseudovector.
+That’s why we came up with the rank-2 electromagnetic tensor.
+It fixes this problem.
+It’s a real tensor.
+Unfortunately, a rank-2 tensor can’t be visualized as an arrow like a vector can,
+but it can be understood as a transformation between vectors.
+In fact, that’s exactly what this equation says about the EM tensor.
+It transforms the 4-velocity of a charged particle into a force.
+A moving charged particle inside of a force field experiences a force.
+That's a little magical, isn't it?
+Ok, let’s use the stress tensor instead.
+Fine!
+I’m a huge dice nerd. I love dice.
+The best ones are the platonic solids.
+Obviously.
+Let’s consider the 4-sided one: The tetrahedron.
+If we want to know the force on one of its surfaces, we just need to know its stress tensor.
+Maybe one of its surfaces is facing this way.
+If it’s experiencing stress described by this, then our surface is being nudged this way.
+The area vector is transformed into a force vector.
+So what’s a tensor?
+It’s a number or collection of similar numbers that maintains its meaning under transformations.
+If you make a different choice in coordinates, the components of the tensor will change,
+but in a way that conspires to keep the meaning of the tensor the same.
+This velocity vector is a rank-1 tensor that describes the motion of the ball,
+regardless of the coordinate choice.
+This stress tensor is a rank-2 tensor and describes how to get a force from area,
+regardless of the coordinate choice.
+If your number or collection of numbers doesn’t do that, then it’s not a tensor.
+It’s a false tensor or pseudotensor.
+Not being able to tell the difference can get you into some serious trouble,
+at least in the math.
+So got any questions about tensors?
+Please ask in the comments.
+If you're looking for a deeper dive, check out the book I wrote.
+It’s got an entire chapter explaining tensors
+and it’s available in paperback and as an eBook.
+Thanks for liking and sharing this video.
+Don’t forget to subscribe if you’d like to keep up with us.
+And until next time, remember, it’s ok to be a little crazy.
+If investing in your STEM skills is your kind of new year’s resolution, you should check out Brilliant.
+Maybe you’re naturally curious or want to build your problem-solving skills
+or need to develop confidence in your analytical abilities.
+With Brilliant Premium, you can learn something new every day.
+Brilliant’s thought-provoking math, science, and computer science content helps guide you to mastery.
+by taking complex concepts and breaking them up into bite-sized understandable chunks.
+There’s a whole course on linear algebra which is where matrices are important.
+There’s even a course on 3D geometry where you can learn about platonic solids.
+Brilliant helps you achieve your goals in STEM, one small commitment-to-learning at a time.
+If this sounds like a service you’d like to use, go to brilliant dot org slash Science Asylum today.
+The first 200 subscribers will get 20% off an annual subscription.
+I really enjoyed some of the take-aways people got from my last video.
+Like that the Earth has only been around the galaxy 20 times
+or that the galaxy has only rotated somewhere between 50 and 60 times.
+Most of us would have expected those numbers to be bigger, you know?
+Anyway, thanks for watching.","The transcript is discussing the concept of tensors in mathematics. It begins by stating that a tensor is a mathematical object with n indices and m-to-the-n components that follows certain transformation rules. The speaker then expresses dissatisfaction with this definition and introduces the three c's of definitions – correctness, completeness, and conciseness. The transcript goes on to explain that tensors come from the Latin word meaning ""to stretch"" and that objects can experience different types of stress, not just tensile stress. The speaker also mentions that vectors are a type of tensor and there are other types of stress that haven't been mentioned yet. The episode is sponsored by Brilliant and made possible by Patreon supporters.",34,116,"A rank-n tensor in m-dimensions is a mathematical object that has n indicesand m-to-the-n components. The word ""tensor"" actually comes from an old Latin word meaning ""to stretch"" If you pull an object outward along its length, it experiences something called ""tensile stress""",3,43,"In this week’s definition, we’re going to look at tensors.",3,10,"This episode was made possible by generous supporters on Patreon . Hey Crazies, you find definitions in textbooks incredibly unsatisfying . The word ""tensor"" actually comes from an old Latin word meaning ""to stretch"" In response, it’s length increases .",8,40,"huggingface-ledlargebooksummarization Error: API call failed with status 400: Bad Request",0

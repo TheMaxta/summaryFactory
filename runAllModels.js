@@ -41,6 +41,27 @@ import('node-fetch').then((module) => {
         output: process.stdout
     });
 
+    function addColumnLabels(csvFilePath) {
+        const columnLabels = 'video_id,transcript,gpt3.5,gpt3.5_word_count,gpt3.5_length,bart,bart_word_count,bart_length,pegasus,pegasus_word_count,pegasus_length,falcon,falcon_word_count,falcon_length\n';
+        if (!fs.existsSync(csvFilePath) || fs.readFileSync(csvFilePath, 'utf8').trim() === '') {
+            fs.writeFileSync(csvFilePath, columnLabels, 'utf8');
+        }
+    }
+
+    function compareWords(transcript, summary) {
+        const transcriptWords = new Set(transcript.split(/\s+/));
+        const summaryWords = summary.split(/\s+/);
+        let count = 0;
+
+        summaryWords.forEach(word => {
+            if (!transcriptWords.has(word)) {
+                count++;
+            }
+        });
+
+        return count;
+    }
+
     async function handleUserInput() {
         try {
             const videoId = await askQuestion('Enter YouTube video ID: ');
@@ -58,22 +79,26 @@ import('node-fetch').then((module) => {
                 'huggingface-ledlargebooksummarization'
             ];
 
+            const csvFilePath = path.resolve(__dirname, 'summaries.csv');
+            addColumnLabels(csvFilePath); // Ensure column labels are added
+
             const csvRow = [videoId, `"${processedCaptions.replace(/"/g, '""')}"`];
 
             for (const apiName of apiNames) {
                 const apiEndpoint = getApiEndpoint(apiName);
-
                 try {
                     const summary = await apiEndpoint.generateSummary("", truncatedCaptions);
-                    csvRow.push(`"${summary.replace(/"/g, '""')}"`);
-                    console.log(`Summary for ${apiName} successfully written to csv.`)
+                    const wordCount = compareWords(processedCaptions, summary);
+                    const summaryLength = summary.split(/\s+/).length;
+                    csvRow.push(`"${summary.replace(/"/g, '""')}"`, wordCount, summaryLength);
+                    console.log(`Summary for ${apiName} with ${wordCount} words not in transcript and length ${summaryLength}.`);
                 } catch (error) {
                     console.error(`Error during summary generation with ${apiName}:`, error.message);
-                    csvRow.push(`"${apiName} Error: ${error.message.replace(/"/g, '""')}"`);
+                    csvRow.push(`"${apiName} Error: ${error.message.replace(/"/g, '""')}"`, 0);
                 }
             }
 
-            const csvFilePath = path.resolve(__dirname, 'summaries.csv');
+
             fs.appendFileSync(csvFilePath, csvRow.join(',') + '\n', 'utf8');
             console.log(`Summaries have been written to ${csvFilePath}`);
             
@@ -92,11 +117,3 @@ import('node-fetch').then((module) => {
 }).catch((err) => {
     console.error("Failed to load 'node-fetch' module", err);
 });
-
-// Function getLastIndex is not used in this script, but can be included for future enhancements.
-function getLastIndex(csvFilePath) {
-    if (!fs.existsSync(csvFilePath)) return 0;
-    const data = fs.readFileSync(csvFilePath, 'utf8');
-    const lines = data.trim().split('\n');
-    return lines.length; // Assumes no header; if there's a header, subtract 1
-}

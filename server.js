@@ -61,7 +61,7 @@ import('node-fetch').then(module => {
             
             // Process and send the transcript to the API
             const summary = await apiEndpoint.generateSummary(prompt, truncatedCaptions);
-            console.log("Summary: "+summary);
+            console.log("Summary: "+ summary);
 
         } catch (error) {
             console.error(error.message);
