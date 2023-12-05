@@ -195,4 +195,202 @@ I really enjoyed some of the take-aways people got from my last video.
 Like that the Earth has only been around the galaxy 20 times
 or that the galaxy has only rotated somewhere between 50 and 60 times.
 Most of us would have expected those numbers to be bigger, you know?
-Anyway, thanks for watching.","The transcript is discussing the concept of tensors in mathematics. It begins by stating that a tensor is a mathematical object with n indices and m-to-the-n components that follows certain transformation rules. The speaker then expresses dissatisfaction with this definition and introduces the three c's of definitions – correctness, completeness, and conciseness. The transcript goes on to explain that tensors come from the Latin word meaning ""to stretch"" and that objects can experience different types of stress, not just tensile stress. The speaker also mentions that vectors are a type of tensor and there are other types of stress that haven't been mentioned yet. The episode is sponsored by Brilliant and made possible by Patreon supporters.",34,116,"A rank-n tensor in m-dimensions is a mathematical object that has n indicesand m-to-the-n components. The word ""tensor"" actually comes from an old Latin word meaning ""to stretch"" If you pull an object outward along its length, it experiences something called ""tensile stress""",3,43,"In this week’s definition, we’re going to look at tensors.",3,10,"This episode was made possible by generous supporters on Patreon . Hey Crazies, you find definitions in textbooks incredibly unsatisfying . The word ""tensor"" actually comes from an old Latin word meaning ""to stretch"" In response, it’s length increases .",8,40,"huggingface-ledlargebooksummarization Error: API call failed with status 400: Bad Request",0
+Anyway, thanks for watching.","This transcript discusses the concept of tensors and introduces the definition of a rank-n tensor in m-dimensions. The transcript acknowledges that the definition may be unsatisfying and offers an alternative approach to understanding tensors. It explains that the word ""tensor"" comes from a Latin word meaning ""to stretch"" and discusses different types of stress that an object can experience. The transcript also mentions that a vector is a type of tensor and alludes to other types of stresses that will be further explained.",22,83,"A rank-n tensor in m-dimensions is a mathematical object that has n indicesand m-to-the-n components. The word ""tensor"" actually comes from an old Latin word meaning ""to stretch"" If you pull an object outward along its length, it experiences something called ""tensile stress""",3,43,"In this week’s definition, we’re going to look at tensors.",3,10,"This episode was made possible by generous supporters on Patreon . Hey Crazies, you find definitions in textbooks incredibly unsatisfying . The word ""tensor"" actually comes from an old Latin word meaning ""to stretch"" In response, it’s length increases .",8,40,"huggingface-ledlargebooksummarization Error: API call failed with status 400: Bad Request",0,0
+mmzRYGCfTzc,"hi everyone this is another video on the
+attention mechanism series brought to
+you by the MLS studio in this video I
+will talk about multi-head attention
+that was proposed in the paper attention
+is all you need
+here is the outline of this video in the
+last video I described the scaled dot
+product attention in full detail but
+given that the scale.product or sdp is
+at the core of multi-head attention so
+in this video first we will see a quick
+recap of sdp then I will describe what
+multi-head attention is and how it works
+and finally we can see two ways of using
+the attention mechanism which is either
+using it as self-attention or using it
+for cross attention so we will see the
+differences between the two mechanisms
+and at the end I will finish this video
+with an exercise
+so first let's start with a quick
+overview of scale dot product attention
+or sdp
+given a sequence of words for example
+words from an English sentence the goal
+of sdp is to find the relationship
+between these words
+so here each rectangle represents a word
+or token in this sentence so first we
+extract features X1 to x t where T is
+the sequence length
+then from each x i we compute three
+vectors q k and V which are known as
+query key and value vectors these
+computations are based on a matrix
+multiplication as shown in the equation
+box here
+then we put these q k and V vectors
+together to form matrices q k and v as
+shown here at this point we are ready to
+move to the first step in the
+scale.product attention
+on the left panel you can see the full
+diagram of scale dot product attention
+with q k and V matrices as input in the
+first step we compute a DOT product or a
+matrix multiplication between q and K
+and we'll get a compatibility Matrix
+which has dimensionality t by T
+in the next step we scale the
+compatibility matrix by 1 over a square
+root of d sub K where d sub K is the
+dimensionality of vectors q and K in the
+previous video I explained why this
+scaling is necessary but for the sake of
+time we can skip this discussion here
+step 3 is an optional step so I did not
+cover that in the previous video
+this step is only needed in some
+applications such as in sequence to
+sequence translation or Auto regressive
+sequence generation
+for example when we are training a model
+to generate new sequences and our input
+sequences contain past and future
+sections of a sentence the objective is
+to predict future tokens of that input
+sequence but the input sequence contains
+future tokens so in that case we have to
+mask the future tokens
+and we can do that by setting the upper
+triangular section of the compatibility
+Matrix to negative Infinity as shown
+here this will ensure that word I will
+not be able to see or attend towards
+with larger index than itself
+now in Step 4 we apply the softmax
+function to normalize the compatibility
+Matrix which results in the attention
+weights
+note that if we have masked the upper
+triangle of the compatibility Matrix in
+step 3 with negative Infinity then after
+applying the soft Max the upper triangle
+of the result will be zero and finally
+in a step 5 we perform another matrix
+multiplication between the attention
+weights from previous step and the
+Matrix V the result of this is our
+context Matrix which we call Matrix Z so
+now we can move on to multi-head
+attention the idea of multi-ed attention
+is as follows instead of performing a
+single attention on large matrices q k
+and V it is actually better to break it
+into multiple smaller dimensions and
+perform a scale dot product separately
+on each of those smaller matrices this
+is the full diagram of multi-head
+attention proposed in the paper
+attention is all you need so let's walk
+through the steps involved in multi-head
+attention
+first we have to Define how many heads
+we want to use for multi-head attention
+the lowercase symbol H is used to
+indicate the number of heads and
+typically this value is set to 8. after
+that we have to get that many number of
+sets of q k and V matrices
+for query matrices I'm showing them with
+superscript 1 to Edge
+so we have q1 to qh and we have K1 to KH
+for the key matrices and V1 to VH for
+the value matrices to get these matrices
+we multiply x h times with h different
+weight matrices for Q and the same thing
+for K and for V
+then in the second step we perform a
+scaled dot product attention on each
+triple set of q i k i and VI and we name
+the output of each attention as the
+context Matrix head I performing sdp on
+all sets from 1 to Edge gives us head 1
+to head h
+for step 3 we have these H different
+matrices head 1 to head Edge as shown
+here
+and each one of them has dimensionality
+t by D over h
+in this step we concatenate these heads
+together and we get Matrix Z with
+dimensionality t by D
+finally in the last step we perform a
+matrix multiplication between Matrix Z
+and the learnable weight Matrix w o
+resulting in the context output for this
+multi-head attention layer a very
+important Point here is that the
+computational cost of multi-head
+attention is more or less similar to
+performing a single scale dot product on
+large q k and V matrices but while the
+computational cost is similar multi-ed
+attention is more beneficial than a
+single scale dot product attention the
+reason is multi-ed attention can extract
+context information from different
+subspaces at different positions of the
+input sequence
+so that brings us to the last topic of
+this video self-attention versus cross
+attention so self-attention is when we
+want to get the relationship among the
+words in an input sequence and we have
+seen several examples so far in this
+video and the previous one each word in
+this sequence can attend to other words
+with different degrees
+but for cross-attention we have two
+sequences X and Y and this could be for
+example a translation application like X
+is the sentences in English and Y is
+their translations in German and the
+length of sequence is X and Y could be
+different here we can use cross
+attention to make each word in sequence
+y to attend towards in sequence X so
+let's see how this can be done
+so as we have seen so far for
+self-attention with scale.product we
+extract matrices q k and V from the
+input sequence X but for cross attention
+we have two input sequences X and Y and
+in order to make sequence y attend to
+the words in sequence X we extract
+Matrix Q from y abstract Matrix K and V
+from X therefore the main difference
+between the self-attention and cross
+attention is basically where q k and V
+come from after we obtain these q k and
+V the rest are the same
+I want to finish this video with an
+exercise so imagine we have x with
+dimensionality T1 by D
+and Y with dimensionality T2 by D
+and we want to know what will be the
+dimensionality of these other matrices
+that are computed for a single head
+cross attention between X and Y where Y
+is attending to X
+so find the dimensionality of q k v the
+compatibility Matrix q k transpose as
+well as the final context Matrix Z I
+will provide the answer in the
+description of this video
+thanks for watching","This video is part of a series on the attention mechanism and focuses on multi-head attention. The speaker begins by giving a recap of scaled dot product attention and its role in multi-head attention. They then explain what multi-head attention is and how it works, including its use in both self-attention and cross-attention. The video concludes with an exercise. The speaker also briefly outlines the process of scaled dot product attention, which involves finding the relationship between words in a sequence by extracting features from each word and using query, key, and value vectors.",34,94,"This video is the second in a series on the attention mechanism. In the first video I described the scaled dot product attention in full detail. In this video I will talk about multi-head attention and how it works. We will also see two ways of using attention mechanism which is eitherusing it as self-attention or using it for cross attention.",10,61,"Multi-head attention or sdp is at the core of multi-head attention so in this video first we will see a quick recap of sdp then I will describe what multi-head attention is and how it works and finally we can see two ways of using the attention mechanism which is either using",1,52,"this is another video on the attention mechanism series brought to you by the MLS studio in this video I will talk about multi-head attention that was proposed in the paper attention . the scaled dot product attention or sdp is either using it as self-attention or using it for cross attention so we will see the differences between the two mechanisms . at the end I will finish this video with an exercise so first let's start with a quick overview of scale.product attention given a sequence of words for example words from an",2,95,"huggingface-ledlargebooksummarization Error: API call failed with status 400: Bad Request",0,0
